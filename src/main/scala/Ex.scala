@@ -1,6 +1,7 @@
 package com.epam
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.col
 
 object Ex {
   def main(args: Array[String]): Unit = {
@@ -9,7 +10,10 @@ object Ex {
     ss.read
       .option("header", "true")
       .csv("data-in/hotels.csv")
-      .show()
+      .filter(col("Country") === "US")
+      .write
+      .format("avro")
+      .save("data-out/hotels.without.US")
 
     ss.close()
   }
