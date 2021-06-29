@@ -9,11 +9,11 @@ object Ex {
 
     ss.read
       .option("header", "true")
-      .csv("data-in/hotels.csv")
+      .csv(args(0))
       .filter(col("Country") === "US")
       .write
       .format("avro")
-      .save("data-out/hotels.without.US")
+      .save(args(1))
 
     ss.close()
   }
